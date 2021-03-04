@@ -34,7 +34,6 @@ public class Partida {
 	public void fazerPartida()
 	{
 		int linha = 0, coluna = 0;
-		//boolean isCorrect = false; 
 		
 		while(numeroJogadas < 3)
 		{
@@ -66,18 +65,6 @@ public class Partida {
 		{
 			jogadorVez = 1;
 		}
-		
-		
+			
 	}
-	
-	/*while(!isCorrect)
-	{
-		
-		if((linha>=0&&linha<=3) && (coluna>=0 && coluna<=3))
-		{
-			isCorrect = true;
-		} else {
-			System.out.println("Valor maior que o tabuleiro, jogue novamente!");
-		}
-	}*/
 }
