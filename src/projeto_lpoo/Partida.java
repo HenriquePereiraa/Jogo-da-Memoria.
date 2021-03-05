@@ -4,10 +4,14 @@ import java.util.Scanner;
 
 public class Partida {
 	
-	public Tabuleiro tabuleiro = new Tabuleiro(4);
-	Scanner scan = new Scanner(System.in);
-	int jogadorVez = 1;
-	int numeroJogadas = 1;
+	private Scanner scan = new Scanner(System.in);
+	private Tabuleiro tabuleiro = new Tabuleiro(4);
+	
+	private Jogador player1;
+	private Jogador player2;
+	private String vezJogador;
+	private int jogadorAtualControle = 1;
+	private int numeroJogadas = 1;
 	
 	public void fazerJogada(int x, int y)
 	{
@@ -37,33 +41,33 @@ public class Partida {
 		
 		while(numeroJogadas < 3)
 		{
-			System.out.println("Jogador " + jogadorVez + " indique a posição da jogada " + numeroJogadas);
+			System.out.println("Jogador " + jogadorAtualControle + " indique a posição da jogada " + numeroJogadas);
 			linha = scan.nextInt();
 			coluna = scan.nextInt();
 			if(validarJogada(linha, coluna))
 			{
 				
 			} else {
-				System.out.println("Valor maior que o tabuleiro, jogue novamente!");
+				System.out.println("Valor fora do tabuleiro, jogue novamente!");
 				linha = scan.nextInt();
 				coluna = scan.nextInt();
 				while(!validarJogada(linha, coluna))
 				{
-					System.out.println("Valor maior que o tabuleiro, jogue novamente!");
+					System.out.println("Valor fora do tabuleiro, jogue novamente!");
 					linha = scan.nextInt();
 					coluna = scan.nextInt();
 				}
 			}
 			
-			System.out.println("Jogador " + jogadorVez + " jogou, X: " + linha + " Y: " + coluna);
+			System.out.println("Jogador " + jogadorAtualControle + " jogou, X: " + linha + " Y: " + coluna);
 			numeroJogadas++;
 		}	
 		
-		jogadorVez++;
+		jogadorAtualControle++;
 		numeroJogadas = 1;
-		if(jogadorVez == 3)
+		if(jogadorAtualControle == 3)
 		{
-			jogadorVez = 1;
+			jogadorAtualControle = 1;
 		}
 			
 	}
