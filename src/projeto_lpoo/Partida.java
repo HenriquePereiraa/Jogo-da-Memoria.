@@ -9,7 +9,6 @@ public class Partida {
 	
 	private Jogador player1;
 	private Jogador player2;
-	private String vezJogador;
 	private int jogadorAtualControle = 1;
 	private int numeroJogadas = 1;
 	
