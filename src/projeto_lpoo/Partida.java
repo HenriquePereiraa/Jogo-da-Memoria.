@@ -7,8 +7,8 @@ public class Partida {
 	private Scanner scan = new Scanner(System.in);
 	private Tabuleiro tabuleiro = new Tabuleiro(4);
 	
-	private Jogador player1;
-	private Jogador player2;
+	private Jogador jogador1 = new Jogador("Henrique",1);
+	private Jogador jogador2 = new Jogador("Ronaldo",2);
 	private int jogadorAtualControle = 1;
 	private int numeroJogadas = 1;
 	private String[][] pecaRevelada = new String[4][4];
@@ -47,7 +47,12 @@ public class Partida {
 		
 		while(numeroJogadas < 3)
 		{
-			System.out.println("Jogador " + jogadorAtualControle + " indique a posição da jogada " + numeroJogadas);
+			if(jogadorAtualControle == 1)
+			{
+				System.out.println("Jogador " + jogador1.getIdentPlayer() + ", " + jogador1.getNome() + " indique a posição da jogada " + numeroJogadas);
+			} else {
+				System.out.println("Jogador " + jogador2.getIdentPlayer() + ", " + jogador2.getNome() + " indique a posição da jogada " + numeroJogadas);
+			}
 			linha = scan.nextInt();
 			coluna = scan.nextInt();
 			if(validarJogada(linha, coluna))
@@ -103,7 +108,13 @@ public class Partida {
 				System.out.print("\n");
 			}
 			
-			System.out.println("Jogador " + jogadorAtualControle + " jogou, X: " + linha + " Y: " + coluna);
+			if(jogadorAtualControle == 1)
+			{
+				System.out.println("Jogador " + jogador1.getNome() + " jogou, X: " + linha + " Y: " + coluna);
+			} else {
+				System.out.println("Jogador " + jogador2.getNome() + " jogou, X: " + linha + " Y: " + coluna);
+			}
+	
 			if(tabuleiro.fazerJogada(peca1, peca2) && numeroJogadas >=2)
 			{
 				numeroJogadas--;
