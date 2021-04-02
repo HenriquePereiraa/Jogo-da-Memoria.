@@ -5,18 +5,24 @@ import java.util.Random;
 public class Tabuleiro {
 	
 		private String[][] tabuleiro;
-		
+
 		public Tabuleiro(int tamanho)
 		{
 			this.tabuleiro = new String[tamanho][tamanho];
 			this.preencherTabuleiro();
 		}
 		
-		public void fazerJogada(int x, int y)
-		{
-	
-		}
 		
+		
+		public boolean fazerJogada(String x, String y)
+		{
+			if(x.equals(y))
+			{
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 		public void preencherTabuleiro()
 		{
@@ -109,19 +115,7 @@ public class Tabuleiro {
 			return "";
 		}
 		
-		
-		
-		public void printTabuleiro()
-		{
-			for(int i = 0; i < this.tabuleiro.length; i++)
-			{
-				for(int j = 0; j < this.tabuleiro.length; j++)
-				{
-					System.out.print("|" + this.tabuleiro[i][j] + "|");
-				}
-				System.out.println("\n");
-				
-			}
+		public String[][] getTabuleiro() {
+			return tabuleiro;
 		}
-		
 }

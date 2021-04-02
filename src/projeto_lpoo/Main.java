@@ -9,13 +9,12 @@ public class Main {
 		Jogador player1 = new Jogador("Player1");
 		Jogador player2 = new Jogador("Player2");
 
-		
-		/*for(int i = 0; i < 6; i++)
+		for(int i = 0; i < 6; i++)
 		{
 			start.fazerPartida();
-		}*/
+		}
 		
-		tb.printTabuleiro();
+		
 		
 
 	}
