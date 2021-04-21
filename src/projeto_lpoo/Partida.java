@@ -2,16 +2,20 @@ package projeto_lpoo;
 
 import java.util.Scanner;
 
+
+
 public class Partida {
 	
 	private Scanner scan = new Scanner(System.in);
-	private Tabuleiro tabuleiro = new Tabuleiro(4);
+	private Tabuleiro tabuleiro = new Tabuleiro(8);
 	
 	private Jogador jogador1 = new Jogador("Henrique",1);
 	private Jogador jogador2 = new Jogador("Ronaldo",2);
 	private int jogadorAtualControle = 1;
 	private int numeroJogadas = 1;
-	private String[][] pecaRevelada = new String[4][4];
+	private int tam = this.tabuleiro.getTabuleiro().length;
+	private String[][] pecaRevelada = new String[tam][tam];
+	
 	
 	public void fazerJogada(int x, int y)
 	{
@@ -24,7 +28,7 @@ public class Partida {
 		boolean isCorrect = false; 
 		while(!isCorrect)
 		{
-			if((linha>=0&&linha<=3) && (coluna>=0 && coluna<=3))
+			if((linha>=0&&linha<=tam) && (coluna>=0 && coluna<=tam))
 			{
 				isCorrect = true;
 			} else {

@@ -5,11 +5,15 @@ import java.util.Random;
 public class Tabuleiro {
 	
 		private String[][] tabuleiro;
+		//private String[][] tabuleiro;
+		private String[] pecas;
+		
 
 		public Tabuleiro(int tamanho)
 		{
 			this.tabuleiro = new String[tamanho][tamanho];
-			this.preencherTabuleiro();
+			this.preencher();
+			//this.preencherTabuleiro();
 		}
 		
 		
@@ -24,98 +28,91 @@ public class Tabuleiro {
 			}
 		}
 		
-		public void preencherTabuleiro()
+		Random random = new Random();
+		int linha = 0;
+		int coluna = 0;
+		
+		public String[][] getTabuleiro() {
+			return this.tabuleiro;
+		}
+		
+		
+		public void preencher()
 		{
-			Random random = new Random();
-			String[] pecas = {"A","B","C","D","E","F","G","H"};
-			String peca;
-
-			for(int i = 0; i < this.tabuleiro.length; i++)
+			boolean cheio = false;
+			boolean sbCheio = false;
+			int count = 0;
+			int index = 0;
+			
+			if(this.tabuleiro.length == 4)
 			{
-				for(int j = 0; j < this.tabuleiro.length; j++)
-				{	
-					peca = pecas[random.nextInt(8)];
-									
-					if(this.tabuleiro[i][j] == null && pecasRepitidas(peca) < 2)
-					{
-						this.tabuleiro[i][j] = peca;
-					}
-				}	
+				pecas = new String[] {"A","B","C","D","E","F","G","H","A","B","C","D","E","F","G","H"};
+				index = 4;
+			} else if(this.tabuleiro.length == 6)
+			{
+				pecas = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R"};
+				index = 6;
+			}  else if(this.tabuleiro.length == 8)
+			{
+			pecas = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","&","#","@","%","*","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","&","#","@","%","*"};
+				index = 8;
 			}
 			
+			while(!cheio)
+			{
+				int linha = random.nextInt(index);
+				int coluna = random.nextInt(index);
+				if(tabuleiro[linha][coluna] == null)
+				{
+					tabuleiro[linha][coluna] = pecas[count];
+				} else {
+					do
+					{
+						linha = random.nextInt(index);
+						coluna = random.nextInt(index);
+						if(tabuleiro[linha][coluna] == null)
+						{
+							sbCheio = true;
+						}
+						
+					}while(!sbCheio);
+					tabuleiro[linha][coluna] = pecas[count];
+					sbCheio = false;
+				}
+				cheio = tbCheio();
+				if(cheio == false)
+				{
+					count++;
+				}
+			}
+		}
+		
+		public boolean tbCheio()
+		{
 			for(int i = 0; i < this.tabuleiro.length; i++)
 			{
 				for(int j = 0; j < this.tabuleiro.length; j++)
 				{
 					if(this.tabuleiro[i][j] == null)
 					{
-						this.tabuleiro[i][j] = pecaValida();
+						return false;
 					}
 				}
 			}
+			
+			return true;
 		}
 		
-		public int pecasRepitidas(String peca)
+		public void show()
 		{
-			int count = 0;
-			
 			for(int i = 0; i < this.tabuleiro.length; i++)
 			{
 				for(int j = 0; j < this.tabuleiro.length; j++)
 				{
-					if(this.tabuleiro[i][j] == peca )
-					{
-						
-						count++;
-					}
+					System.out.print("| " +this.tabuleiro[i][j] +" |");
 				}
-			}
-			
-			return count;
+				System.out.println();
+			}	
 		}
 		
-		public String pecaValida()
-		{
-			String[] pecas = {"A","B","C","D","E","F","G","H"};
-			
-			for(int i = 0; i < this.tabuleiro.length; i++)
-			{
-				for(int j = 0; j < this.tabuleiro.length; j++)
-				{
-					if(this.tabuleiro[i][j] != null)
-					{
-						continue;
-					} else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[0]) < 2)
-					{
-						return pecas[0];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[1]) < 2)
-					{
-						return pecas[1];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[2]) < 2)
-					{
-						return pecas[2];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[3]) < 2)
-					{
-						return pecas[3];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[4]) < 2)
-					{
-						return pecas[4];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[5]) < 2)
-					{
-						return pecas[5];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[6]) < 2)
-					{
-						return pecas[6];
-					}  else if(this.tabuleiro[i][j] == null && pecasRepitidas(pecas[7]) < 2)
-					{
-						return pecas[7];
-					}
-				}
-			}
-			return "";
-		}
-		
-		public String[][] getTabuleiro() {
-			return tabuleiro;
-		}
 }
