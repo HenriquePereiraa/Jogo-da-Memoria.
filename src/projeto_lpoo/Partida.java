@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Partida {
 	
 	private Scanner scan = new Scanner(System.in);
-	private Tabuleiro tabuleiro = new Tabuleiro(8);
+	private Tabuleiro tabuleiro = new Tabuleiro(4);
 	
 	private Jogador jogador1 = new Jogador("Henrique",1);
 	private Jogador jogador2 = new Jogador("Ronaldo",2);
@@ -15,7 +15,6 @@ public class Partida {
 	private int numeroJogadas = 1;
 	private int tam = this.tabuleiro.getTabuleiro().length;
 	private String[][] pecaRevelada = new String[tam][tam];
-	
 	
 	public void fazerJogada(int x, int y)
 	{
@@ -28,7 +27,7 @@ public class Partida {
 		boolean isCorrect = false; 
 		while(!isCorrect)
 		{
-			if((linha>=0&&linha<=tam) && (coluna>=0 && coluna<=tam))
+			if(((linha>=0&&linha<=tam) && (coluna>=0 && coluna<=tam)) && (this.tabuleiro.getTabuleiro()[linha][coluna] != pecaRevelada[linha][coluna]))
 			{
 				isCorrect = true;
 			} else {
@@ -53,9 +52,9 @@ public class Partida {
 		{
 			if(jogadorAtualControle == 1)
 			{
-				System.out.println("Jogador " + jogador1.getIdentPlayer() + ", " + jogador1.getNome() + " indique a posição da jogada " + numeroJogadas);
+				System.out.println("Jogador " + jogador1.getIdentPlayer() + ", " + jogador1.getNome() + ", pontuação " + jogador1.getScore() + " indique a posição da jogada " + numeroJogadas);
 			} else {
-				System.out.println("Jogador " + jogador2.getIdentPlayer() + ", " + jogador2.getNome() + " indique a posição da jogada " + numeroJogadas);
+				System.out.println("Jogador " + jogador2.getIdentPlayer() + ", " + jogador2.getNome() + ", pontuação " + jogador2.getScore() + " indique a posição da jogada " + numeroJogadas);
 			}
 			linha = scan.nextInt();
 			coluna = scan.nextInt();
@@ -63,12 +62,12 @@ public class Partida {
 			{
 				
 			} else {
-				System.out.println("Valor fora do tabuleiro, jogue novamente!");
+				System.out.println("Valor inválido, jogue novamente!");
 				linha = scan.nextInt();
 				coluna = scan.nextInt();
 				while(!validarJogada(linha, coluna))
 				{
-					System.out.println("Valor fora do tabuleiro, jogue novamente!");
+					System.out.println("Valor inválido, jogue novamente!");
 					linha = scan.nextInt();
 					coluna = scan.nextInt();
 				}
@@ -118,11 +117,19 @@ public class Partida {
 			} else {
 				System.out.println("Jogador " + jogador2.getNome() + " jogou, X: " + linha + " Y: " + coluna);
 			}
+			
 	
 			if(tabuleiro.fazerJogada(peca1, peca2) && numeroJogadas >=2)
 			{
 				numeroJogadas--;
 				numeroJogadasUser--;
+				if(jogador1.getIdentPlayer() == jogadorAtualControle)
+				{
+					jogador1.setScore(1);
+				} else if(jogador2.getIdentPlayer() == jogadorAtualControle)
+				{
+					jogador2.setScore(1);
+				}
 			} else {
 				numeroJogadas++;
 			}

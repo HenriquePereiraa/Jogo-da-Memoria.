@@ -15,7 +15,7 @@ private int identPlayer;
 		return score;
 	}
 	public void setScore(int score) {
-		this.score = score;
+		this.score += score;
 	}
 
 	public int getIdentPlayer() {

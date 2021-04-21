@@ -5,7 +5,6 @@ import java.util.Random;
 public class Tabuleiro {
 	
 		private String[][] tabuleiro;
-		//private String[][] tabuleiro;
 		private String[] pecas;
 		
 
@@ -13,7 +12,6 @@ public class Tabuleiro {
 		{
 			this.tabuleiro = new String[tamanho][tamanho];
 			this.preencher();
-			//this.preencherTabuleiro();
 		}
 		
 		
