@@ -1,4 +1,4 @@
-package projeto_lpoo;
+package br.com.poli.badMemory;
 
 import java.util.Random;
 
@@ -14,8 +14,7 @@ public class Tabuleiro {
 			this.preencher();
 		}
 		
-		
-		
+	
 		public boolean fazerJogada(String x, String y)
 		{
 			if(x.equals(y))
@@ -101,16 +100,15 @@ public class Tabuleiro {
 			return true;
 		}
 		
-		public void show()
+		public void showTb()
 		{
 			for(int i = 0; i < this.tabuleiro.length; i++)
 			{
 				for(int j = 0; j < this.tabuleiro.length; j++)
 				{
-					System.out.print("| " +this.tabuleiro[i][j] +" |");
+					System.out.print("| " + " |");
 				}
 				System.out.println();
 			}	
 		}
-		
 }

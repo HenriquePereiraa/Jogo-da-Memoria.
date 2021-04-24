@@ -1,4 +1,4 @@
-package projeto_lpoo;
+package br.com.poli.badMemory.players;
 
 public class Jogador extends Pessoa {
 	
@@ -28,6 +28,6 @@ private int identPlayer;
 
 	@Override
 	public String toString() {
-		return " "+getIdentPlayer()+" - O nome do jogador eh "+getNome();
+		return " "+getIdentPlayer()+" - O nome do jogador é, "+getNome();
 	}
 }

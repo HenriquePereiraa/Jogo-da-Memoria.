@@ -1,4 +1,4 @@
-package projeto_lpoo;
+package br.com.poli.badMemory.players;
 
 public class Pessoa {
 public String nome;
