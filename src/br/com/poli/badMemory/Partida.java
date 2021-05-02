@@ -1,5 +1,7 @@
 package br.com.poli.badMemory;
 
+import java.util.Random;
+
 import br.com.poli.badMemory.players.Jogador;
 
 public class Partida {
@@ -11,6 +13,8 @@ public class Partida {
 	private int numeroJogadas = 1;
 	private int tam;
 	private String[][] pecaRevelada;
+	private String[][] memorioIA;
+	
 	
 	private int linha = 0, coluna = 0;
 	private int numeroJogadasUser = 1;
@@ -25,11 +29,13 @@ public class Partida {
 		this.tabuleiro = new Tabuleiro(dificuldade);
 		this.tam = this.tabuleiro.getTabuleiro().length;
 		this.pecaRevelada = new String[tam][tam];
+		this.memorioIA = new String[tam][tam];
 	}
 	
 	public boolean validarJogada(int linha, int coluna)
 	{
 		boolean isCorrect = false; 
+		
 		while(!isCorrect)
 		{
 			if(((linha>=0&&linha<tam) && (coluna>=0 && coluna<tam)) && (this.tabuleiro.getTabuleiro()[linha][coluna] != pecaRevelada[linha][coluna]))
@@ -51,32 +57,30 @@ public class Partida {
 			{
 				for(int  j= 0; j < this.tabuleiro.getTabuleiro().length; j++)
 				{
-					if(this.tabuleiro.getTabuleiro()[i][j] == this.getPecaRevelada()[i][j])//imprime os pares revelados
+					if(this.tabuleiro.getTabuleiro()[i][j] == this.getPecaRevelada()[i][j])
 					{
 						System.out.print("|"+this.getPecaRevelada()[i][j]+" |");
 					}else if((i == this.getLinhaInformada() && j == this.getColunaInformada()) && this.getNumeroJogadasUser() == 2)
-					{//imprime a primeira peça revelada na jogada do player
+					{
 						System.out.print("|"+this.tabuleiro.getTabuleiro()[this.getLinhaInformada()][this.getColunaInformada()]+" |");
-					} else if(i == linha && j == coluna)//confere se as posições são iguais para poder poder imprimir a matriz com a peça revelada na determinada posição
+					} else if(i == linha && j == coluna)
 					{	
-						if(this.getNumeroJogadasUser() == 1 && this.getNumeroJogadas() == 1)//verifica se é a primeira jogada do player
+						if(this.getNumeroJogadasUser() == 1 && this.getNumeroJogadas() == 1)
 						{
 							System.out.print("|"+this.tabuleiro.getTabuleiro()[i][j]+" |");
-							this.setLinhaInformada(linha);//pegar a posição da primeira jogada
-							this.setColunaInformada(coluna);//pegar posição da primeira jogada
+							this.setLinhaInformada(linha);
+							this.setColunaInformada(coluna);
 							numeroJogadasUser++;
-							//this.setNumeroJogadasUser(1);//++;
-							this.setPeca1(this.tabuleiro.getTabuleiro()[linha][coluna]);//pegando peca para verificar se forma par com a segunda
-						} else if(this.getNumeroJogadasUser() == 2 && this.getNumeroJogadas() == 2)//verifica se é a segunda jogada do player
+							this.setPeca1(this.tabuleiro.getTabuleiro()[linha][coluna]);
+						} else if(this.getNumeroJogadasUser() == 2 && this.getNumeroJogadas() == 2)
 						{
 							System.out.print("|"+this.tabuleiro.getTabuleiro()[i][j]+" |");
-							this.setPeca2(this.tabuleiro.getTabuleiro()[linha][coluna]);//pegando peca para verificar se forma par com a primeira
+							this.setPeca2(this.tabuleiro.getTabuleiro()[linha][coluna]);
 							
 							if(this.tabuleiro.getTabuleiro()[this.getLinhaInformada()][this.getColunaInformada()] == this.tabuleiro.getTabuleiro()[i][j])
 							{
 								pecaRevelada[this.getLinhaInformada()][this.getColunaInformada()] = this.tabuleiro.getTabuleiro()[this.getLinhaInformada()][this.getColunaInformada()];
 								pecaRevelada[linha][coluna] = this.tabuleiro.getTabuleiro()[linha][coluna];
-								
 							}
 						}
 						
@@ -95,9 +99,7 @@ public class Partida {
 			}
 			
 			if(tabuleiro.fazerJogada(this.getPeca1(), this.getPeca2()) && this.getNumeroJogadas() >= 2)
-			{//verificar se o jogador acertou os pares e poder continuar jogando
-				//E atribuir pontuação
-				
+			{
 				numeroJogadas--;
 				numeroJogadasUser--;
 				if(jogador1.getIdentPlayer() == this.getJogadorAtualControle())
@@ -113,9 +115,7 @@ public class Partida {
 	}
 	
 	public void ControleDeJogadas()
-	{	
-		//so pode chegar aqui depois que for jogado duas peças 
-		//this.setNumeroJogadasUser(1);// = 1;
+	{
 		numeroJogadasUser = 1;
 		jogadorAtualControle++;
 		numeroJogadas = 1;
@@ -138,6 +138,44 @@ public class Partida {
 			}
 		}
 		return true;
+	}
+	
+	
+	public void memoriaCPU(int linha, int coluna)
+	{
+		for(int i = 0; i<this.tabuleiro.getTabuleiro().length; i++)
+		{
+			for(int j = 0; j<this.tabuleiro.getTabuleiro().length; j++)
+			{
+				if(i == linha && j == coluna)
+				{
+					memorioIA[linha][coluna] = this.tabuleiro.getTabuleiro()[linha][coluna];
+				}
+			}
+		}
+	}
+	
+	public int[] pegarPecaMemoria(int linha, int coluna)
+	{
+		int[] pecas = new int[2];
+		Random random = new Random();
+		
+		for(int i = 0; i<this.tabuleiro.getTabuleiro().length; i++)
+		{
+			for(int j = 0; j<this.tabuleiro.getTabuleiro().length; j++)
+			{
+				if(this.memorioIA[i][j] == this.memorioIA[linha][coluna] && (i != linha && j != coluna))
+				{
+					pecas[0] = i;
+					pecas[1] = j;
+					return pecas;
+				} else {
+					pecas[0] = random.nextInt(this.tabuleiro.getTabuleiro().length);
+					pecas[1] = random.nextInt(this.tabuleiro.getTabuleiro().length);
+				}
+			}
+		}
+		return pecas;
 	}
 	
 	public int getNumeroJogadas() {
@@ -192,21 +230,9 @@ public class Partida {
 	public void setColunaInformada(int colunaInformada) {
 		this.colunaInformada = colunaInformada;
 	}
-	
+
+	public String[][] getMemorioIA() {
+		return memorioIA;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
