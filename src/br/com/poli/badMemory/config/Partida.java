@@ -1,7 +1,5 @@
-package br.com.poli.badMemory;
-
+package br.com.poli.badMemory.config;
 import java.util.Random;
-
 import br.com.poli.badMemory.players.Jogador;
 
 public class Partida {
@@ -11,11 +9,9 @@ public class Partida {
 	private Jogador jogador2;
 	private int jogadorAtualControle = 1;
 	private int numeroJogadas = 1;
-	private int tam;
+	private int tamanhoTabuleiro;
 	private String[][] pecaRevelada;
 	private String[][] memorioIA;
-	
-	
 	private int linha = 0, coluna = 0;
 	private int numeroJogadasUser = 1;
 	private String peca1 = "";
@@ -27,9 +23,9 @@ public class Partida {
 		this.jogador1 = player1;
 		this.jogador2 = player2;
 		this.tabuleiro = new Tabuleiro(dificuldade);
-		this.tam = this.tabuleiro.getTabuleiro().length;
-		this.pecaRevelada = new String[tam][tam];
-		this.memorioIA = new String[tam][tam];
+		this.tamanhoTabuleiro = this.tabuleiro.getTabuleiro().length;
+		this.pecaRevelada = new String[tamanhoTabuleiro][tamanhoTabuleiro];
+		this.memorioIA = new String[tamanhoTabuleiro][tamanhoTabuleiro];
 	}
 	
 	public boolean validarJogada(int linha, int coluna)
@@ -38,10 +34,15 @@ public class Partida {
 		
 		while(!isCorrect)
 		{
-			if(((linha>=0&&linha<tam) && (coluna>=0 && coluna<tam)) && (this.tabuleiro.getTabuleiro()[linha][coluna] != pecaRevelada[linha][coluna]))
+			try
 			{
+				if(!((linha>=0&&linha<tamanhoTabuleiro) && (coluna>=0 && coluna<tamanhoTabuleiro)) && (this.tabuleiro.getTabuleiro()[linha][coluna] != pecaRevelada[linha][coluna]))
+				{
+					throw new ValidacaoException(linha,coluna);
+				}
 				isCorrect = true;
-			} else {
+			}catch(Exception e)
+			{
 				return false;
 			}
 		}
@@ -89,13 +90,6 @@ public class Partida {
 					}
 				}
 				System.out.print("\n");
-			}
-			
-			if(this.getJogadorAtualControle() == 1)
-			{
-				System.out.println("Jogador " + jogador1.getNome() + " jogou, X: " + linha + " Y: " + coluna);
-			} else {
-				System.out.println("Jogador " + jogador2.getNome() + " jogou, X: " + linha + " Y: " + coluna);
 			}
 			
 			if(tabuleiro.fazerJogada(this.getPeca1(), this.getPeca2()) && this.getNumeroJogadas() >= 2)

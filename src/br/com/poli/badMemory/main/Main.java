@@ -1,8 +1,8 @@
-package br.com.poli.badMemory;
-
+package br.com.poli.badMemory.main;
 import java.util.Random;
 import java.util.Scanner;
-
+import br.com.poli.badMemory.config.Partida;
+import br.com.poli.badMemory.config.Tabuleiro;
 import br.com.poli.badMemory.players.Jogador;
 
 public class Main {
@@ -27,8 +27,6 @@ public class Main {
 			 namePlayerTwo = "CPU";
 		}
 
-
-
 		int nivel = nivelDificuldade();
 		Tabuleiro tb = new Tabuleiro(nivel);
 		Jogador jogadorPlayerOne = new Jogador(namePlayerOne,1);
@@ -36,14 +34,11 @@ public class Main {
 		jogadorPlayerOne.toString();
 		jogadorPlayerTwo.toString();
 		tb.showTb();
-
-
 		int linha = 0, coluna = 0;
 		int jogadaPlayer = 0;
 		int lCpu = 0, cCpu = 0, pecasCpu[];
 		boolean encerrarPartida = false;
 		Partida partida = new Partida(jogadorPlayerOne, jogadorPlayerTwo, nivel);
-
 
 		while(!encerrarPartida)
 		{
@@ -92,7 +87,6 @@ public class Main {
 							}
 						}while(!partida.validarJogada(linha, coluna));	
 					} else {
-
 						linha = scan.nextInt();
 						coluna = scan.nextInt();
 						jogadaPlayer++;
@@ -121,6 +115,12 @@ public class Main {
 					}
 				}
 				partida.fazerJogada(linha, coluna);
+				if(partida.getJogadorAtualControle() == 1)
+				{
+					System.out.println("Jogador " + partida.getJogador1().getNome() + " jogou, X: " + linha + " Y: " + coluna);
+				} else {
+					System.out.println("Jogador " + partida.getJogador2().getNome() + " jogou, X: " + linha + " Y: " + coluna);
+				}
 			}
 			encerrarPartida = partida.verificarFimJogo();
 			partida.ControleDeJogadas();
@@ -152,47 +152,58 @@ public class Main {
 			System.out.println(partida.getJogador1().getNome() + ": " + partida.getJogador1().getScore() + "pts");
 			System.out.println(partida.getJogador2().getNome() + ": " + partida.getJogador2().getScore() + "pts");
 		}
-
 		System.out.println("===================================");
 	}
 
 	public static int nivelDificuldade()
 	{
 		int nivel = 0;
+		boolean nivelCorreto = false;
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Escola uma nivel de dificuldade ");
-		System.out.println("1 - Facil");
-		System.out.println("2 - Medio");
-		System.out.println("3 - Dificil");
-		int dificuldade = scan.nextInt();
+		while(!nivelCorreto)
+		{
+			System.out.println("Escola uma nivel de dificuldade ");
+			System.out.println("1 - Facil");
+			System.out.println("2 - Medio");
+			System.out.println("3 - Dificil");
+			int dificuldade = scan.nextInt();
 
-		if(dificuldade == 1)
-		{
-			nivel = 4;
-		} else if(dificuldade == 2)
-		{
-			nivel = 6;
-		} else if(dificuldade == 3)
-		{
-			nivel = 8;
-		} else {
-			System.out.println("Nivel inválido!");
+			if(dificuldade == 1)
+			{
+				nivel = 4;
+				nivelCorreto = true;
+			} else if(dificuldade == 2)
+			{
+				nivel = 6;
+				nivelCorreto = true;
+			} else if(dificuldade == 3)
+			{
+				nivel = 8;
+				nivelCorreto = true;
+			} else {
+				System.out.println("\nNivel inválido!");
+			}	
 		}
-
 		return nivel;
 	}
 
 	public static int modoJogo()
 	{
-		//TODO fazer um tratamento de exceção
 		int modo = 0;
-		
+		boolean modoCorreto = false;
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Escola o modo de jogo");
-		System.out.println("1 - contra CPU");
-		System.out.println("2 - Dois jogadores");
-		modo = scan.nextInt();
-
+		while(!modoCorreto)
+		{
+			System.out.println("Escola o modo de jogo");
+			System.out.println("1 - contra CPU");
+			System.out.println("2 - Dois jogadores");
+			modo = scan.nextInt();
+			
+			if(!(modo > 2 || modo < 1))
+			{
+				modoCorreto = true;
+			}
+		}
 		return modo;
 	}
 }

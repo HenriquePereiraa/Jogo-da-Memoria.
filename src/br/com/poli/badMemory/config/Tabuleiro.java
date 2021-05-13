@@ -1,5 +1,4 @@
-package br.com.poli.badMemory;
-
+package br.com.poli.badMemory.config;
 import java.util.Random;
 
 public class Tabuleiro {
